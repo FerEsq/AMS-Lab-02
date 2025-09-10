@@ -43,7 +43,7 @@ def count_vowels(s):
         if char in vowels:
             count += 1
             
-    return count
+    return 1
 
 '''
 Retorna si una cadena de texto es palindromo o no
