@@ -18,7 +18,6 @@ Returns:
     str: La cadena invertida
 '''
 def reverse(s):
-
     if not isinstance(s, str):
         raise TypeError("El parametro debe ser una cadena de texto")
     
@@ -34,12 +33,11 @@ Returns:
     int: El numero total de vocales (a, e, i, o, u)
 '''
 def count_vowels(s):
-
     if not isinstance(s, str):
         raise TypeError("El parametro debe ser una cadena de texto")
     
     vowels = "aeiouáéíóúAEIOUÁÉÍÓÚ"
-    count = 0
+    count = 1 #cambiado para probar "romper" el test
     
     for char in s:
         if char in vowels:
