@@ -138,3 +138,45 @@ class TestTextManipulation(unittest.TestCase):
         #Prueba que to_upper lance TypeError con diccionario
         with self.assertRaises(TypeError):
             to_upper({"text": "hello"})
+
+    def test_concat_happy_path_1(self):
+        #Prueba concat con dos palabras simples
+        result = concat("Hola", " mundo")
+        self.assertEqual(result, "Hola mundo")
+
+    def test_concat_happy_path_2(self):
+        #Prueba concat con cadenas que contienen numeros y simbolos
+        result = concat("Python", "3.11")
+        self.assertEqual(result, "Python3.11")
+
+    def test_concat_edge_case_empty_strings(self):
+        #Prueba concat con cadenas vacias
+        result = concat("", "")
+        self.assertEqual(result, "")
+
+    def test_concat_edge_case_one_empty(self):
+        #Prueba concat con una cadena vacia
+        result = concat("Hello", "")
+        self.assertEqual(result, "Hello")
+
+    def test_concat_error_case_first_not_string(self):
+        #Prueba que concat lance TypeError cuando el primer parametro no es string
+        with self.assertRaises(TypeError) as context:
+            concat(123, "world")
+        self.assertIn("Ambos parametros deben ser cadenas de texto", str(context.exception))
+
+    def test_concat_error_case_second_not_string(self):
+        #Prueba que concat lance TypeError cuando el segundo parametro no es string
+        with self.assertRaises(TypeError) as context:
+            concat("Hello", 456)
+        self.assertIn("Ambos parametros deben ser cadenas de texto", str(context.exception))
+
+    def test_concat_error_case_both_not_string(self):
+        #Prueba que concat lance TypeError cuando ambos parametros no son string
+        with self.assertRaises(TypeError):
+            concat(123, 456)
+
+    def test_concat_error_case_none_values(self):
+        #Prueba que concat lance TypeError con valores None
+        with self.assertRaises(TypeError):
+            concat(None, None)
