@@ -80,3 +80,19 @@ def to_upper(s):
         raise TypeError("El parametro debe ser una cadena de texto")
     
     return s.upper()
+
+'''
+Retorna una cadena de texto que une dos cadenas de texto
+
+Args:
+    a (str): Primera cadena de texto
+    b (str): Segunda cadena de texto
+    
+Returns:
+    str: La concatenacion de ambas cadenas
+'''
+def concat(a, b):
+    if not isinstance(a, str) or not isinstance(b, str):
+        raise TypeError("Ambos parametros deben ser cadenas de texto")
+    
+    return a + b
