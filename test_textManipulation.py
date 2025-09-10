@@ -180,3 +180,32 @@ class TestTextManipulation(unittest.TestCase):
         #Prueba que concat lance TypeError con valores None
         with self.assertRaises(TypeError):
             concat(None, None)
+
+
+'''
+Pruebas adicionales para confirmar que los tests fallan cuando las funciones no cumplen con lo esperado
+'''
+class TestFunctionFailures(unittest.TestCase):
+    #Esta prueba demuestra que si reverse() retornara la cadena sin invertir, el test fallaria
+    def test_reverse_would_fail_with_wrong_implementation(self):
+        #Si reverse() estuviera mal implementada y retornara s en lugar de s[::-1]
+        result = reverse("test")
+        #Esta assertion pasaría si reverse() fuera incorrecta
+        self.assertNotEqual(result, "test")  #Confirma que SI esta invertida
+    
+    #Esta prueba demuestra que si count_vowels() contara mal, el test fallaria
+    def test_count_vowels_would_fail_with_wrong_count(self):
+        result = count_vowels("hello")  #Deberia ser 2 (e, o)
+        #Si la funcion contara consonantes en lugar de vocales, esto fallaria
+        self.assertEqual(result, 2)
+        self.assertNotEqual(result, 3)  #No debería ser 3
+
+    #Esta prueba demuestra que si is_palindrome() no manejara correctamente los casos, fallaria
+    def test_is_palindrome_would_fail_with_wrong_logic(self):
+        #Si no limpiara espacios y mayusculas, esto fallaria
+        result = is_palindrome("A man a plan a canal Panama")
+        self.assertTrue(result)
+        
+        #Si retornara siempre True, esto fallaria
+        result_false = is_palindrome("not a palindrome")
+        self.assertFalse(result_false)
