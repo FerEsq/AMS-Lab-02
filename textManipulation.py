@@ -23,3 +23,26 @@ def reverse(s):
         raise TypeError("El parametro debe ser una cadena de texto")
     
     return s[::-1]
+
+'''
+Retorna el total de vocales que tiene una cadena de texto
+
+Args:
+    s (str): La cadena de texto a analizar
+    
+Returns:
+    int: El numero total de vocales (a, e, i, o, u)
+'''
+def count_vowels(s):
+
+    if not isinstance(s, str):
+        raise TypeError("El parametro debe ser una cadena de texto")
+    
+    vowels = "aeiouáéíóúAEIOUÁÉÍÓÚ"
+    count = 0
+    
+    for char in s:
+        if char in vowels:
+            count += 1
+            
+    return count
