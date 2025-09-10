@@ -94,3 +94,23 @@ def concat(a, b):
         raise TypeError("Ambos parametros deben ser cadenas de texto")
     
     return a + b
+
+
+'''
+Función de demostración que muestra el uso de todas las funciones.
+'''
+def demo():    
+    test_string = "Anilina"
+    
+    print(f"Cadena de prueba: '{test_string}'")
+    print("-" * 40)
+    
+    print(f"reverse('{test_string}') = '{reverse(test_string)}'")
+    print(f"count_vowels('{test_string}') = {count_vowels(test_string)}")
+    print(f"is_palindrome('{test_string}') = {is_palindrome(test_string)}")
+    print(f"to_upper('{test_string}') = '{to_upper(test_string)}'")
+    print(f"concat('Hola', ' mundo') = '{concat('Hola', ' mundo')}'")
+
+
+if __name__ == "__main__":
+    demo()
