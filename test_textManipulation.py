@@ -107,4 +107,34 @@ class TestTextManipulation(unittest.TestCase):
         #Prueba que is_palindrome lance TypeError con boolean
         with self.assertRaises(TypeError):
             is_palindrome(True)
-            
+
+    def test_to_upper_happy_path_1(self):
+        #Prueba to_upper con palabra en minusculas
+        result = to_upper("hola mundo")
+        self.assertEqual(result, "HOLA MUNDO")
+
+    def test_to_upper_happy_path_2(self):
+        #Prueba to_upper con mezcla de mayusculas, minusculas y acentos
+        result = to_upper("Programación en Python")
+        self.assertEqual(result, "PROGRAMACIÓN EN PYTHON")
+
+    def test_to_upper_edge_case_already_upper(self):
+        #Prueba to_upper con texto ya en mayusculas
+        result = to_upper("PYTHON")
+        self.assertEqual(result, "PYTHON")
+
+    def test_to_upper_edge_case_empty_string(self):
+        #Prueba to_upper con cadena vacia
+        result = to_upper("")
+        self.assertEqual(result, "")
+
+    def test_to_upper_error_case_non_string(self):
+        #Prueba que to_upper lance TypeError con entrada no string
+        with self.assertRaises(TypeError) as context:
+            to_upper(789)
+        self.assertIn("El parametro debe ser una cadena de texto", str(context.exception))
+
+    def test_to_upper_error_case_dict(self):
+        #Prueba que to_upper lance TypeError con diccionario
+        with self.assertRaises(TypeError):
+            to_upper({"text": "hello"})
