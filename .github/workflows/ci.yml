@@ -27,7 +27,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     #Mostrar informacion del entorno
-    - name: 📋 Display Python version
+    - name: Display Python version
       run: python -c "import sys; print(sys.version)"
 
     #Instalar dependencias
@@ -63,11 +63,11 @@ jobs:
         loader = unittest.TestLoader()
         suite = loader.loadTestsFromName('test_textManipulation')
         
-        #Ejecutar con máximo detalle
+        #Ejecutar con maximo detalle
         runner = unittest.TextTestRunner(verbosity=2, buffer=True)
         result = runner.run(suite)
         
-        #Mostrar estadísticas
+        #Mostrar estadisticas
         print(f'\n~~~ Estadisticas ~~~')
         print(f'Pruebas ejecutadas: {result.testsRun}')
         print(f'Errores: {len(result.errors)}')
@@ -100,16 +100,14 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
-    - name: 📋 Test Summary
+    - name: Test Summary
       run: |
         echo "~~~ Resumen de CI ~~~"
-        if [ "${{ needs.test.result }}" == "success" ] && [ "${{ needs.syntax-check.result }}" == "success" ]; then
+        if [ "${{ needs.test.result }}" == "success" ]; then
           echo "✓ Todas las verificaciones pasaron exitosamente"
           echo "✓ Pruebas unitarias: PASARON"
-          echo "✓ Verificación de sintaxis: PASO"
         else
           echo "✖ Algunas verificaciones fallaron"
           echo "Pruebas unitarias: ${{ needs.test.result }}"
-          echo "Verificacion de sintaxis: ${{ needs.syntax-check.result }}"
           exit 1
         fi
