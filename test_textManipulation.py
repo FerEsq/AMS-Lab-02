@@ -40,4 +40,34 @@ class TestTextManipulation(unittest.TestCase):
         #Prueba que reverse lance TypeError con None
         with self.assertRaises(TypeError):
             reverse(None)
-            
+
+    def test_count_vowels_happy_path_1(self):
+        #Prueba count_vowels con palabra que contiene todas las vocales
+        result = count_vowels("programacion")
+        self.assertEqual(result, 5)  #o, a, a, i, o
+
+    def test_count_vowels_happy_path_2(self):
+        #Prueba count_vowels con mayusculas y acentos
+        result = count_vowels("EDUCACIÓN")
+        self.assertEqual(result, 5)  #E, U, A, I, Ó
+
+    def test_count_vowels_edge_case_no_vowels(self):
+        #Prueba count_vowels con cadena sin vocales
+        result = count_vowels("xyz")
+        self.assertEqual(result, 0)
+
+    def test_count_vowels_edge_case_empty_string(self):
+        #Prueba count_vowels con cadena vacia
+        result = count_vowels("")
+        self.assertEqual(result, 0)
+
+    def test_count_vowels_error_case_non_string(self):
+        #Prueba que count_vowels lance TypeError con entrada no string
+        with self.assertRaises(TypeError) as context:
+            count_vowels(456)
+        self.assertIn("El parametro debe ser una cadena de texto", str(context.exception))
+
+    def test_count_vowels_error_case_list(self):
+        #Prueba que count_vowels lance TypeError con lista
+        with self.assertRaises(TypeError):
+            count_vowels(['a', 'e', 'i'])
