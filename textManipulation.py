@@ -65,3 +65,18 @@ def is_palindrome(s):
     
     #Comparar la cadena con su reverso
     return clean_s == clean_s[::-1]
+
+'''
+Retorna una cadena de texto en mayusculas
+
+Args:
+    s (str): La cadena de texto a convertir
+    
+Returns:
+    str: La cadena en mayusculas
+'''
+def to_upper(s):
+    if not isinstance(s, str):
+        raise TypeError("El parametro debe ser una cadena de texto")
+    
+    return s.upper()
