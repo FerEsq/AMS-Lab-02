@@ -46,3 +46,22 @@ def count_vowels(s):
             count += 1
             
     return count
+
+'''
+Retorna si una cadena de texto es palindromo o no
+
+Args:
+    s (str): La cadena de texto a verificar
+    
+Returns:
+    bool: True si es palindromo, False en caso contrario
+'''
+def is_palindrome(s):
+    if not isinstance(s, str):
+        raise TypeError("El parametro debe ser una cadena de texto")
+    
+    #Convertir a minusculas y eliminar espacios para una comparacion mas robusta
+    clean_s = s.lower().replace(" ", "")
+    
+    #Comparar la cadena con su reverso
+    return clean_s == clean_s[::-1]
