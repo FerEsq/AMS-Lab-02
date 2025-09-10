@@ -37,7 +37,7 @@ def count_vowels(s):
         raise TypeError("El parametro debe ser una cadena de texto")
     
     vowels = "aeiouáéíóúAEIOUÁÉÍÓÚ"
-    count = 0 #Cambiar para probar "romper" el test
+    count = 0
     
     for char in s:
         if char in vowels:
