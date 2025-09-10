@@ -1,0 +1,115 @@
+name: CI - Pruebas Unitarias Lab 02
+
+#Ejecutar cuando:
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+    
+    steps:
+    #Descargar el codigo del repositorio
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    #Configurar Python
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    #Mostrar informacion del entorno
+    - name: 📋 Display Python version
+      run: python -c "import sys; print(sys.version)"
+
+    #Instalar dependencias
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # Si tienes requirements.txt, descomenta:
+        # pip install -r requirements.txt
+
+    #Verificar que los archivos existen
+    - name: Check files exist
+      run: |
+        ls -la
+        test -f textManipulation.py || (echo "✖ textManipulation.py not found" && exit 1)
+        test -f test_textManipulation.py || (echo "✖ test_textManipulation.py not found" && exit 1)
+        echo "✓ All required files found"
+
+    #Ejecutar las pruebas unitarias
+    - name: Run unit tests
+      run: |
+        echo "Ejecutando pruebas unitarias"
+        python -m unittest test_textManipulation.py -v
+
+    #Ejecutar las pruebas con reporte detallado
+    - name: Run tests with detailed output
+      run: |
+        echo "~~~ Reporte de las Pruebas ~~~"
+        python -c "
+        import unittest
+        import sys
+        
+        #Cargar las pruebas
+        loader = unittest.TestLoader()
+        suite = loader.loadTestsFromName('test_textManipulation')
+        
+        #Ejecutar con máximo detalle
+        runner = unittest.TextTestRunner(verbosity=2, buffer=True)
+        result = runner.run(suite)
+        
+        #Mostrar estadísticas
+        print(f'\n~~~ Estadisticas ~~~')
+        print(f'Pruebas ejecutadas: {result.testsRun}')
+        print(f'Errores: {len(result.errors)}')
+        print(f'Fallos: {len(result.failures)}')
+        print(f'Exitosas: {result.testsRun - len(result.errors) - len(result.failures)}')
+        
+        #Si hay errores o fallos, mostrarlos
+        if result.errors:
+            print(f'\n✖ ERRORES:')
+            for test, error in result.errors:
+                print(f'  - {test}: {error}')
+        
+        if result.failures:
+            print(f'\n✖ FALLOS:')
+            for test, failure in result.failures:
+                print(f'  - {test}: {failure}')
+        
+        #Determinar resultado final
+        if result.wasSuccessful():
+            print(f'\n✓ Todas las pruebas pasaron')
+            sys.exit(0)
+        else:
+            print(f'\n✖ Algunas pruebas fallaron')
+            sys.exit(1)
+        "
+
+  #Job de resumen final
+  summary:
+    needs: [test]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - name: 📋 Test Summary
+      run: |
+        echo "~~~ Resumen de CI ~~~"
+        if [ "${{ needs.test.result }}" == "success" ] && [ "${{ needs.syntax-check.result }}" == "success" ]; then
+          echo "✓ Todas las verificaciones pasaron exitosamente"
+          echo "✓ Pruebas unitarias: PASARON"
+          echo "✓ Verificación de sintaxis: PASO"
+        else
+          echo "✖ Algunas verificaciones fallaron"
+          echo "Pruebas unitarias: ${{ needs.test.result }}"
+          echo "Verificacion de sintaxis: ${{ needs.syntax-check.result }}"
+          exit 1
+        fi
