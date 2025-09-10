@@ -71,3 +71,40 @@ class TestTextManipulation(unittest.TestCase):
         #Prueba que count_vowels lance TypeError con lista
         with self.assertRaises(TypeError):
             count_vowels(['a', 'e', 'i'])
+
+    def test_is_palindrome_happy_path_1(self):
+        #Prueba is_palindrome con palindromo simple
+        result = is_palindrome("anilina")
+        self.assertTrue(result)
+
+    def test_is_palindrome_happy_path_2(self):
+        #Prueba is_palindrome con palindromo con mayusculas y espacios
+        result = is_palindrome("A man a plan a canal Panama")
+        self.assertTrue(result)
+
+    def test_is_palindrome_happy_path_3(self):
+        #Prueba is_palindrome con palabra que NO es palindromo
+        result = is_palindrome("python")
+        self.assertFalse(result)
+
+    def test_is_palindrome_edge_case_single_char(self):
+        #Prueba is_palindrome con un solo caracter
+        result = is_palindrome("a")
+        self.assertTrue(result)
+
+    def test_is_palindrome_edge_case_empty_string(self):
+        #Prueba is_palindrome con cadena vacia
+        result = is_palindrome("")
+        self.assertTrue(result)
+
+    def test_is_palindrome_error_case_non_string(self):
+        #Prueba que is_palindrome lance TypeError con entrada no string
+        with self.assertRaises(TypeError) as context:
+            is_palindrome(12321)
+        self.assertIn("El parametro debe ser una cadena de texto", str(context.exception))
+
+    def test_is_palindrome_error_case_boolean(self):
+        #Prueba que is_palindrome lance TypeError con boolean
+        with self.assertRaises(TypeError):
+            is_palindrome(True)
+            
